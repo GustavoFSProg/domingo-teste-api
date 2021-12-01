@@ -9,6 +9,7 @@ const upload = multer(uploadConfig)
 const route = Router()
 
 route.get('/', productController.getAll)
+route.get('/get-by-id/:id', productController.getById)
 route.post('/create', upload.single('image'), productController.register)
 
 export default route

@@ -42,4 +42,14 @@ async function getAll(req, res) {
   }
 }
 
-export default { register, getAll }
+async function getById(req, res) {
+  try {
+    const data = await productModelDATA.findById(req.params.id)
+
+    return res.status(201).json(data)
+  } catch (error) {
+    return res.status(400).json({ msg: 'error', error })
+  }
+}
+
+export default { register, getAll, getById }
