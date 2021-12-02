@@ -11,5 +11,6 @@ const route = Router()
 route.get('/', productController.getAll)
 route.get('/get-by-id/:id', productController.getById)
 route.post('/create', upload.single('image'), productController.register)
+route.put('/update/:id', upload.single('image'), productController.update)
 
 export default route

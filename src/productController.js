@@ -52,4 +52,33 @@ async function getById(req, res) {
   }
 }
 
-export default { register, getAll, getById }
+async function update(req, res) {
+  try {
+    cloudinary.config({
+      cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+      api_key: process.env.CLOUDINARY_API_KEY,
+      api_secret: process.env.CLOUDINARY_API_SECRET,
+    })
+
+    cloudinary.uploader.upload(req.file.path, function (result, error) {
+      // console.log(result, error)
+      imagem = result.secure_url
+      resultado = result
+      console.log(resultado)
+    })
+
+    await productModelDATA.findByIdAndUpdate(req.params.id, {
+      $set: {
+        title: req.body.title,
+        price: req.body.price,
+        image: imagem,
+      },
+    })
+
+    return res.status(201).json({ msg: 'User updated susscessfully!!' })
+  } catch (error) {
+    return res.status(400).json({ msg: 'error', error })
+  }
+}
+
+export default { register, getAll, getById, update }
